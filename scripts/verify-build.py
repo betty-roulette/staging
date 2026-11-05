@@ -20,14 +20,17 @@ ROUTES = {
     'PG-008': 'betipercup/rules/killer/',
     'PG-009': 'betipercup/schedule/',
 }
+COMING_SOON = {
+    'PG-014': 'betipercup/event/',
+    'PG-019': 'betipercup/notice/',
+    'PG-020': 'betipercup/organizer/',
+    'PG-021': 'betipercup/faq/',
+    'PG-022': 'betipercup/privacy/',
+}
+ROUTES.update(COMING_SOON)
 OUT_OF_SCOPE = {
     '/staging/betipercup/participants/',
     '/staging/betipercup/participants/recruitment/',
-    '/staging/betipercup/event/',
-    '/staging/betipercup/notice/',
-    '/staging/betipercup/organizer/',
-    '/staging/betipercup/faq/',
-    '/staging/betipercup/privacy/',
 }
 
 class HTML(HTMLParser):
@@ -98,6 +101,9 @@ for pg, route in ROUTES.items():
         assert dom.count_class('menu') == 1
         assert dom.count_class('text-link') >= 5
         assert not any(m.get('http-equiv') == 'refresh' for m in dom.attrs('meta'))
+    if pg in COMING_SOON:
+        main = re.search(r'<main\b[^>]*>(.*?)</main>', html, re.S).group(1)
+        assert main.strip() == '<p>準備中</p>', pg
     report['pages'].append({'pg': pg, 'file': route + 'index.html', 'url': url, 'images': len(dom.attrs('img'))})
 
 assert parsed['PG-002'].count_class('image-card') == 5
@@ -114,18 +120,40 @@ assert not parsed['PG-009'].attrs('table')
 assert not any('event/schedule' in a['href'] for a in parsed['PG-009'].attrs('a'))
 assert '大会結果' not in ''.join(parsed['PG-002'].texts).split('大会情報のご案内')[-1]
 
+MAPS = [
+    '①ギデオン食肉工場：ザ・ゲーム',
+    '②壊滅したボルゴ：忘れ去られた遺跡',
+    '③マクミラン・エステート：コールタワー',
+    '④オートヘイヴン国立研究所：地下施設',
+    '⑤スプリングウッド：バダム幼稚園Ⅱ（ボーナスマップ）',
+]
+detail = (DOCS / ROUTES['PG-006'] / 'index.html').read_text(encoding='utf-8')
+maps_html = re.search(r'<ol class="maps">(.*?)</ol>', detail, re.S).group(1)
+assert re.findall(r'<li>(.*?)</li>', maps_html, re.S) == MAPS
+assert '2026/11/5' in ''.join(parsed['PG-002'].texts)
+assert '2026/11/3' not in ''.join(parsed['PG-002'].texts)
+killer = (DOCS / ROUTES['PG-008'] / 'index.html').read_text(encoding='utf-8')
+assert re.search(r'>使用禁止パーク</th>\s*<td>後日記載</td>', killer)
+
 # Compare all individual published paragraphs, list entries and table cells to
 # the PDF text, when the local, non-public text extraction is available.
 texts = ROOT / 'tmp/spec-text'
 if texts.exists():
     for pg, route in ROUTES.items():
-        if pg == 'PG-001':
+        if pg == 'PG-001' or pg in COMING_SOON:
             continue
         files = list(texts.glob(f'*{pg}*.txt'))
         if pg == 'PG-004':
             files = list(texts.glob('*PG-002_PG-004*.txt'))
         assert len(files) == 1, pg
         source = compact(files[0].read_text(encoding='utf-8'))
+        # These Staging corrections supersede the original specification text.
+        if pg == 'PG-002':
+            source = source.replace('2026/11/3', '2026/11/5')
+        elif pg == 'PG-006':
+            source += '\n'.join(MAPS)
+        elif pg == 'PG-008':
+            source = source.replace('天界の証人', '後日記載')
         html = (DOCS / route / 'index.html').read_text(encoding='utf-8')
         main = re.search(r'<main\b[^>]*>(.*?)</main>', html, re.S).group(1)
         for fragment in re.findall(r'<(?:p|li|td|th)\b[^>]*>(.*?)</(?:p|li|td|th)>', main, re.S):

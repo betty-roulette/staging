@@ -9,14 +9,14 @@ const rows = [
   ['ルーレット実施タイミング', ['初回は大会開催前。2試合目以降は待機時間中に実施する。']],
   ['ルーレットやり直し条件', ['やり直し不可。']],
   ['キラー担当者', ['各試合でルーレット前に担当者を決定。', 'ルーレット実施後の変更は不可。', '別試合では担当者の変更が可能。', '試合開始前にマップを運営に申告すること。']],
-  ['使用禁止パーク', ['天界の証人']],
+  ['使用禁止パーク', ['後日記載']],
   ['使用禁止アドオン', ['ナース：アドオン全般', '神代リゼ：赤頭のムカデ', 'ツインズ：沈黙の布', 'ピッグ：アマンダへの手紙', '山岡凛：母娘の指輪', 'プレイグ：黒のお香', 'スカルマーチャント：玉虫色の未発表原稿', 'ハグ：ミント柄のぼろきれ', 'ガスー：ニワトリの頭']],
   ['同一パーク・アドオンの扱い', ['別試合で同一のパーク・アドオンを使用してよい。']],
 ] as const;
 ---
 <Page page={page}>
   <h1>キラー：ルール</h1>
-  <Info title="キラーTier表"><ReferencedImage id="IMG-012" class="full-image" /></Info>
+  <Info title="キラーTier表"><ReferencedImage id="IMG-012" class="full-image tier-image" /></Info>
   <Info title="キラールール一覧表"><table class="rules-table"><colgroup><col /><col /></colgroup><thead><tr><th scope="col">項目</th><th scope="col">内容</th></tr></thead><tbody>{rows.map(([label, texts]) => <tr><th scope="row">{label}</th><td>{texts.map((text, index) => <>{index > 0 && <br />}{text}</>)}</td></tr>)}</tbody></table></Info>
   <ParentLink page={page} />
 </Page>

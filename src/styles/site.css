@@ -12,7 +12,7 @@ p, li, td, th, .image-label { overflow-wrap: anywhere; }
 .site-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
 .header-image { display: block; max-width: 100%; }
 .header-image img { display: block; width: 288px; height: 48px; max-width: 100%; object-fit: contain; }
-.menu { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; }
+.menu { display: grid; grid-template-columns: repeat(4, max-content); column-gap: 1em; list-style: none; padding: 0; }
 .site-footer { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; }
 .site-footer > :nth-child(2) { justify-self: center; }
 .site-footer > :last-child { justify-self: end; }
@@ -79,6 +79,7 @@ p, li, td, th, .image-label { overflow-wrap: anywhere; }
 .required-perks li { counter-increment: perks; border-bottom: 1px solid #00A1BF; }
 .required-perks li::before { content: counter(perks) ") "; }
 .banned-perks { padding-left: 1em; }
+.pg008 .tier-image { width: 50%; }
 .pg008 .rules-table col:first-child { width: 31%; }
 .pg008 .rules-table col:last-child { width: 69%; }
 .pg009 .info { border-radius: 10px; }
@@ -90,7 +91,7 @@ p, li, td, th, .image-label { overflow-wrap: anywhere; }
   .site-header { flex-direction: column; align-items: flex-start; }
   .header-image img { width: 240px; height: 40px; }
   .site-header nav { width: 100%; }
-  .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .menu { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 0; }
   .info { padding: 14px; }
   .info + .info { margin-top: 16px; }
   .image-links { grid-template-columns: minmax(0, 1fr); gap: 12px; }

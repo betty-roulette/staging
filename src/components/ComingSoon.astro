@@ -1,0 +1,10 @@
+---
+import Page from '../layouts/Page.astro';
+import type { PageId } from '../lib/site';
+
+interface Props { page: PageId; }
+const { page } = Astro.props;
+---
+<Page page={page}>
+  <p>準備中</p>
+</Page>
