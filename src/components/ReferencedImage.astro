@@ -1,0 +1,7 @@
+---
+import { imageBase, images, type ImageId } from '../lib/site';
+interface Props { id: ImageId; class?: string; width?: number; height?: number; }
+const { id, class: className, width, height } = Astro.props;
+const [filename, alt] = images[id];
+---
+<img src={`${imageBase}${filename}`} alt={alt} class={className} width={width} height={height} />

@@ -1,0 +1,11 @@
+---
+import { href, type PageId } from '../lib/site';
+import ReferencedImage from './ReferencedImage.astro';
+import Menu from './Menu.astro';
+interface Props { page: PageId; }
+const { page } = Astro.props;
+---
+<header class="site-header content">
+  <a class="header-image" href={href(page, 'PG-002')}><ReferencedImage id="IMG-001" width={288} height={48} /></a>
+  <Menu page={page} />
+</header>

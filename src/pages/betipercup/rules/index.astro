@@ -1,0 +1,23 @@
+---
+import Page from '../../../layouts/Page.astro';
+import Info from '../../../components/Info.astro';
+import ImageCard from '../../../components/ImageCard.astro';
+const page = 'PG-005';
+const rows = [
+  ['対戦形式', 'チーム戦'], ['試合形式', 'カスタムマッチ'], ['大会方式', 'トーナメント形式'],
+  ['キラー', '各試合ごとにルーレットで決定'], ['サバイバー', '提示された中から2パークを選択'],
+  ['詳細ルール', '大会全体・サバイバー・キラーの各ルールページで確認'],
+  ['勝敗決定', 'キラー、サバイバー：それぞれの獲得ポイントが多いチームの勝利'],
+];
+---
+<Page page={page}>
+  <h1>大会ルール概要・詳細</h1>
+  <Info title="大会形式の説明" class="format-table">
+    <table class="rules-table"><colgroup><col /><col /></colgroup><tbody>{rows.map(([label, text]) => <tr><td>{label}</td><td>{text}</td></tr>)}</tbody></table>
+  </Info>
+  <div class="link-group"><div class="image-links">
+    <ImageCard page={page} to="PG-006" image="IMG-005" />
+    <ImageCard page={page} to="PG-007" image="IMG-006" />
+    <ImageCard page={page} to="PG-008" image="IMG-007" />
+  </div></div>
+</Page>

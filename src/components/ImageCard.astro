@@ -1,0 +1,10 @@
+---
+import { href, pages, type PageId, type ImageId } from '../lib/site';
+import ReferencedImage from './ReferencedImage.astro';
+interface Props { page: PageId; to: PageId; image: ImageId; }
+const { page, to, image } = Astro.props;
+---
+<a class="image-card" href={href(page, to)}>
+  <span class="image-stage"><ReferencedImage id={image} /></span>
+  <span class="image-label"><span>{pages[to][0]}</span><span class="arrow" aria-hidden="true">→</span></span>
+</a>

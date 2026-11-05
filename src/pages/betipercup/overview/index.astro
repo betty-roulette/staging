@@ -1,0 +1,20 @@
+---
+import Page from '../../../layouts/Page.astro';
+import Info from '../../../components/Info.astro';
+import ImageCard from '../../../components/ImageCard.astro';
+const page = 'PG-004';
+---
+<Page page={page}>
+  <h1>大会概要</h1>
+  <Info title="大会名称" class="name"><p>べちぱーCup Vol.1</p></Info>
+  <Info title="大会の目的・概要" class="purpose"><p>「べちぱーCup Vol.1」は、Dead by Daylightをみんなで楽しむことを目的とした大会です。参加する方には、普段とは少し違った緊張感や対戦の楽しさを、応援・視聴する方には、それぞれの試合やプレイヤーの活躍を楽しんでいただける大会を目指します。大会のルールやスケジュール、参加者情報などについては、各案内ページをご確認ください。</p></Info>
+  <div class="summary-row">
+    <Info title="大会形式" class="format"><p>「べちぱーCup Vol.1」は、チームで勝利を目指すDead by Daylightのカスタムマッチ大会です。大会はトーナメント形式で進行し、各試合で使用するキラーはルーレットによって決定します。どのキラーが選ばれるか分からない中で、その場に応じた判断やチームワークが求められる、予測不能な展開も楽しめる大会です。</p></Info>
+    <Info title="開催日時" class="datetime"><p>2026年12月19日（土）18:00開始</p></Info>
+  </div>
+  <div class="link-group"><div class="image-links">
+    <ImageCard page={page} to="PG-005" image="IMG-004" />
+    <ImageCard page={page} to="PG-011" image="IMG-010" />
+    <ImageCard page={page} to="PG-009" image="IMG-008" />
+  </div></div>
+</Page>

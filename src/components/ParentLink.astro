@@ -1,0 +1,6 @@
+---
+import { href, type PageId } from '../lib/site';
+interface Props { page: PageId; }
+const { page } = Astro.props;
+---
+<p class="parent-link"><a class="text-link" href={href(page, 'PG-005')}>親ページに戻る：大会ルール概要・詳細</a></p>

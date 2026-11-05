@@ -1,0 +1,63 @@
+---
+import Page from '../../../../layouts/Page.astro';
+import Info from '../../../../components/Info.astro';
+import ImageCard from '../../../../components/ImageCard.astro';
+import ParentLink from '../../../../components/ParentLink.astro';
+import { href } from '../../../../lib/site';
+const page = 'PG-006';
+interface RuleCard {
+  title: string;
+  paragraphs?: string[];
+  bullets?: string[];
+  maps?: string[];
+  after?: string;
+  contact?: boolean;
+}
+// No.21: paragraph/list boundaries are maintained independently of display width.
+const rules: RuleCard[] = [
+  { title: '試合の進行', paragraphs: ['各チームがキラー側・サバイバー側の両方を担当する。'] },
+  { title: '得点集計', bullets: ['サバイバー：発電した台数＋脱出', 'キラー：吊り数＋全滅（2ポイント）'] },
+  { title: '勝敗判定', paragraphs: ['サバイバー＋キラーのポイントが多いチーム。'] },
+  { title: '同ポイント時の優先順位', paragraphs: ['サバのリザルト２位のBPスコア上位が勝利。'] },
+  { title: 'マップ', paragraphs: ['キラーが以下から選択する。'], maps: ['①ザ・ゲーム', '②落ちた避難所', '③コールタワー', '④地下施設', '⑤バダム幼稚園Ⅱ'] },
+  { title: '試合結果の報告', paragraphs: ['キラー担当はマッチのリザルト画面のスクリーンショットを運営に提出する。'] },
+  { title: 'ボイスチャット', paragraphs: ['同一チーム内でのVCはOKです。大会側で専用チャンネルを準備します。'] },
+  { title: '共通禁止事項', bullets: ['オファリング', '煽り行為、ゴースティング', 'チーム外からの試合中の助言・情報提供', 'グリッチ・バグを利用した行為', '故意による切断、試合放棄行為'], after: '「降参」「儀式を終了」は認めない。ただし運営側から指示があった場合は指示に従うこと。' },
+  { title: '不慮の切断などによる再試合', bullets: ['5分未満の切断は再試合。', '5分以上なら、吊り数・発電数・脱出数でポイント計算。'] },
+  { title: 'チームメンバー不揃い', paragraphs: ['試合開始までにメンバーが揃わなかった場合は棄権とする。試合開始直前でのメンバー交代は運営へ申告し判断を仰ぐ。'] },
+  { title: '大会ルール変更', paragraphs: ['期間の定めなく、ルール変更は運営側で協議する。協議結果は以下のいずれかで通知とする。'], bullets: ['サイト上で公開しているルールを修正', '大会当日の配信画面にて提示'] },
+  { title: 'その他', contact: true },
+];
+const penalties: RuleCard[] = [
+  { title: '煽り行為', paragraphs: ['連続屈伸、不要なライトの連続クリック・使用、特に脱出ゲート付近での行為、ケバブ等の行為は違反とする。'] },
+  { title: 'ゴースティング', paragraphs: ['対戦中に配信・観戦等から対戦相手の情報を取得する行為は違反とする。'] },
+  { title: 'チーム外からの助言', paragraphs: ['試合中にチーム外の人物から助言・情報提供を受ける行為は違反とする。'] },
+  { title: 'ゲームから抜ける行為', bullets: ['「降参」及び「儀式を終了」を参加者の判断で実施する事は違反とする。', '故意の切断は違反とする。', '意図的な試合放棄は違反とする。', 'サバイバーの場合：カラスが３羽ついたら違反とする（ゲームに参加していないと見なす）。', 'キラーの場合：試合に参加する意思が感じられない状況が１分以上続いた場合に違反とする。'] },
+  { title: 'キラーの使用とパーク', bullets: ['ルーレットによって決まったTierに属さないキラーを使用した場合は違反とする。', '禁止パークの使用は違反とする。'] },
+  { title: 'サバイバーパーク構成', bullets: ['指定された2パークを使用するルールが決定済みのため、それに従わない場合は違反とする。', 'チーム内でのパーク重複も違反とする。'] },
+  { title: 'アイテムとチェスト', bullets: ['アイテムの持ち込み及び使用は違反とする。', 'チェストの開放はOKだが、アイテムを拾う・使う行為は違反とする。'] },
+  { title: 'オファリングの使用', paragraphs: ['オファリングはサバイバー、キラーの双方とも使用した場合は違反とする。'] },
+  { title: 'ペナルティ', paragraphs: ['実況・解説者に煽り等の違反行為について判断を一任いたします。明らかな煽り行為であれば、その場で失格とする。判断がつかない場合は警告とする。また、運営が観戦者モードで監視して発覚した違反は、運営内で協議し実況・解説者へ伝えられ、試合中もしくは試合結果発表の前に公表される。'] },
+  { title: 'ペナルティ：警告', paragraphs: ['警告を受けた場合は、マイナス1ポイントとする。試合開始後にパーク・アイテム・アドオン・オファリングなどの違反が見つかった場合は再試合とする。違反項目は1項目につき1ポイントマイナスする。重複の場合はマイナス2ポイント。'] },
+  { title: 'ペナルティ：失格', paragraphs: ['煽り行為、意図的な切断・試合放棄、サバイバー：カラスが３羽ついた、キラー：試合に参加する意思が感じられない状況が１分以上続いた、の行為については発覚次第、失格とする。また、同じ人が2回警告を受けた場合、チームとして失格とする。'] },
+];
+---
+<Page page={page}>
+  <h1>大会ルール詳細</h1>
+  {[{ title: '大会ルール詳細', cards: rules }, { title: '違反行為とペナルティ（まとめ）', cards: penalties }].map((group, index) => <Info>
+    <h2>{index === 1 && <span aria-hidden="true">＋</span>}{group.title}</h2>
+    <div class="rule-cards">{group.cards.map((card) => <section class="rule-card">
+      <h3>{card.title}</h3>
+      {card.paragraphs?.map((text) => <p>{text}</p>)}
+      {card.maps && <ol class="maps">{card.maps.map((text) => <li>{text}</li>)}</ol>}
+      {card.bullets && <ul>{card.bullets.map((text) => <li>{text}</li>)}</ul>}
+      {card.after && <p>{card.after}</p>}
+      {card.contact && <p>質問や申告などは「<a class="text-link" href={href(page, 'PG-021')}>問合せフォーム</a>」よりお願いいたします。</p>}
+    </section>)}</div>
+  </Info>)}
+  <div class="link-group"><div class="image-links">
+    <ImageCard page={page} to="PG-007" image="IMG-006" />
+    <ImageCard page={page} to="PG-008" image="IMG-007" />
+  </div></div>
+  <ParentLink page={page} />
+</Page>

@@ -1,0 +1,14 @@
+---
+import { description } from '../lib/site';
+interface Props { title: string; redirect?: boolean; }
+const { title, redirect = false } = Astro.props;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<meta name="description" content={description} />
+<title>{title}｜べちぱーCup</title>
+<link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/images-stg/favicon.ico" />
+<link rel="icon" type="image/png" sizes="192x192" href="/images-stg/favicon-192.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/images-stg/apple-touch-icon.png" />
+{redirect && <meta http-equiv="refresh" content="0;url=./betipercup/" />}

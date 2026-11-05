@@ -1,0 +1,25 @@
+---
+import Page from '../../../../layouts/Page.astro';
+import Info from '../../../../components/Info.astro';
+import ParentLink from '../../../../components/ParentLink.astro';
+const page = 'PG-007';
+const required = ['英雄の奮起', '大ヒット', '化学的な罠', '魂の平穏', '都会の逃走術', '怪我の功名', '執着心', 'セカンドウィンド'];
+const banned = ['有能の証明', '出世街道', '全集中', 'コソ泥の本能', 'スペシャリスト', '路上生活', '査定', 'ゴミ漁りの名人', '切磋琢磨', '呼び出し：網を張る蜘蛛／呼び出し：裏切り者のカラス', 'チームワーク：小さな声', 'チームワーク：つながった回路', '執念の対象', '位置エネルギー', '過剰な熱意', '恵み系パーク全て', 'サボタージュ'];
+const rows = [
+  ['使用パーク', ['上記の「使用指定パーク」から２つを使用すること', '１つのパークを２人以上で使用する事は禁止']],
+  ['残り２パーク', ['残り２つは禁止パーク以外を使用可能', '１つのパークを２人以上で使用する事は禁止']],
+  ['同一パークの重複', ['チーム内でのパーク重複は禁止']],
+  ['使用禁止パーク', ['上記の「禁止パーク」参照']],
+  ['アイテム・チェスト', ['アイテムの持ち込みは禁止', 'チェストの開放はＯＫ', 'チェストのアイテムは拾う、使うは禁止']],
+  ['キャラクター', ['チーム内でのキャラクター重複は禁止']],
+] as const;
+---
+<Page page={page}>
+  <h1>サバイバー：ルール</h1>
+  <Info title="指定パークと禁止パーク"><div class="perk-cards">
+    <section class="perk-card"><h3>使用指定パーク</h3><ol class="required-perks">{required.map((name) => <li>{name}</li>)}</ol></section>
+    <section class="perk-card"><h3>禁止パーク</h3><ul class="banned-perks">{banned.map((name) => <li>{name}</li>)}</ul></section>
+  </div></Info>
+  <Info title="サバイバールール一覧表"><table class="rules-table"><colgroup><col /><col /></colgroup><thead><tr><th scope="col">項目</th><th scope="col">内容</th></tr></thead><tbody>{rows.map(([label, texts]) => <tr><th scope="row">{label}</th><td><ul>{texts.map((text) => <li>{text}</li>)}</ul></td></tr>)}</tbody></table></Info>
+  <ParentLink page={page} />
+</Page>
