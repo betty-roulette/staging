@@ -2,7 +2,6 @@
 import Page from '../../../../layouts/Page.astro';
 import Info from '../../../../components/Info.astro';
 import ImageCard from '../../../../components/ImageCard.astro';
-import ParentLink from '../../../../components/ParentLink.astro';
 import { href } from '../../../../lib/site';
 const page = 'PG-006';
 interface RuleCard {
@@ -65,5 +64,5 @@ const penalties: RuleCard[] = [
     <ImageCard page={page} to="PG-007" image="IMG-006" />
     <ImageCard page={page} to="PG-008" image="IMG-007" />
   </div></div>
-  <ParentLink page={page} />
+  <p class="parent-link"><a class="text-link" href={href(page, 'PG-005')}>大会ルール概要・詳細 に戻る</a></p>
 </Page>

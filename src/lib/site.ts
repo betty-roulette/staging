@@ -45,6 +45,8 @@ export const images = {
   'IMG-011': ['IMG-011_event.png', '大会当日ページへのリンク'],
   'IMG-012': ['IMG-012_tier.png', 'キラーTier表'],
   'IMG-013': ['IMG-013_timeline.png', '大会全体の日程・主要予定'],
+  'IMG-014': ['IMG-014_intro.png', '参加者紹介'],
+  'IMG-015': ['IMG-015_bracket.png', '対戦表'],
   'IMG-016': ['IMG-016_agenda.png', '大会当日スケジュール'],
 } as const;
 export type ImageId = keyof typeof images;
