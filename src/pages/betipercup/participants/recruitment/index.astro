@@ -8,7 +8,7 @@ const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdFkS9jC6Zftel7-qMkA_b
 const rows = [
   ['応募単位', ['チーム単位で応募する']],
   ['チーム人数', ['4～5人']],
-  ['募集チーム数', ['最大4チーム']],
+  ['募集チーム数', ['最小4チーム']],
   ['応募条件', ['18歳以上／BAN歴がないこと', 'Discord・Xを利用できること']],
   ['対応プラットフォーム', ['Steam／Epic Games／PlayStation']],
   ['募集期間', ['11月上旬～11月下旬（暫定）']],
@@ -32,7 +32,13 @@ const rows = [
         {rows.map(([label, lines]) => (
           <tr>
             <th scope="row">{label}</th>
-            <td>{lines.map((line, i) => <>{i > 0 && <br />}{line}</>)}</td>
+            <td>
+              {label === '参加時の同意' ? (
+                <><a class="text-link" href={href(page, 'PG-005')}>大会ルール</a>・<a class="text-link" href={href(page, 'PG-019')}>注意事項／免責事項</a>への同意<br />{lines[1]}</>
+              ) : label === '関連ページ' ? (
+                <><a class="text-link" href={href(page, 'PG-019')}>{lines[0]}</a><br /><a class="text-link" href={href(page, 'PG-021')}>{lines[1]}</a></>
+              ) : lines.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+            </td>
           </tr>
         ))}
       </tbody>
