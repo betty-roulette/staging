@@ -1,0 +1,94 @@
+---
+import Page from '../layouts/Page.astro';
+import Info from './Info.astro';
+import { href, pages } from '../lib/site';
+
+interface Props {
+  page: 'PG-019' | 'PG-022';
+  linkText: string;
+  groups: {
+    heading: string;
+    intro?: string;
+    items: { heading: string; paragraphs: string[] }[];
+  }[];
+}
+
+const { page, linkText, groups } = Astro.props;
+const contactUrl = href(page, 'PG-021');
+---
+<Page page={page}>
+  <article class="policy">
+    <h1>{pages[page][0]}</h1>
+    {groups.map(({ heading, intro, items }) => (
+      <Info title={heading}>
+        {intro && <p class="policy-intro">{intro}</p>}
+        <div class="policy-items">
+          {items.map(({ heading, paragraphs }) => (
+            <section class="policy-item">
+              <h3><span class="policy-marker" aria-hidden="true">•</span><span>{heading}</span></h3>
+              {paragraphs.map((paragraph) => {
+                const offset = paragraph.indexOf(linkText);
+                return (
+                  <p>{offset < 0 ? paragraph : <>{paragraph.slice(0, offset)}<a class="text-link" href={contactUrl}>{linkText}</a>{paragraph.slice(offset + linkText.length)}</>}</p>
+                );
+              })}
+            </section>
+          ))}
+        </div>
+      </Info>
+    ))}
+  </article>
+</Page>
+
+<style>
+  .policy {
+    --title-gap: 18px;
+    --heading-gap: 12px;
+    --item-space: 12px;
+    --marker-size: 16px;
+    padding-block: 20px;
+  }
+
+  h1 { margin: 0 0 var(--title-gap); }
+  .policy :global(.info) { border-radius: 10px; }
+  .policy :global(.info > h2) { margin-bottom: var(--heading-gap); }
+  .policy-items { display: grid; gap: var(--item-space); }
+  .policy-item {
+    min-width: 0;
+    padding: var(--item-space);
+    border-radius: 10px;
+    background: #FFFFFF;
+  }
+  .policy-item:nth-child(even) { background: #EBF8FB; }
+  h3 {
+    display: grid;
+    grid-template-columns: var(--marker-size) minmax(0, 1fr);
+    column-gap: 8px;
+    align-items: baseline;
+    margin-top: 0;
+  }
+  .policy-marker { color: #00A1BF; font-size: var(--marker-size); }
+  h1, h3, .policy :global(.info > h2) { font-weight: 700; }
+  p { font-size: 14px; font-weight: 400; }
+  .policy-intro { margin-top: 0; }
+  .policy-item p { margin: 0; text-indent: 0; }
+  .policy-item p + p { margin-top: 8px; }
+
+  @media (min-width: 961px) {
+    .policy {
+      --title-gap: 20px;
+      --heading-gap: 16px;
+      --item-space: 16px;
+      --marker-size: 18px;
+      padding-block: 24px;
+    }
+    h1 { font-size: 30px; line-height: 1.4; }
+    .policy :global(.info > h2) {
+      border-bottom: 1px solid #DFF1F5;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+    h3 { margin-bottom: 10px; font-size: 18px; line-height: 1.5; }
+    p { font-size: 16px; line-height: 1.6; }
+  }
+</style>
