@@ -1,4 +1,188 @@
 ---
-import ComingSoon from '../../../components/ComingSoon.astro';
+import Page from '../../../layouts/Page.astro';
+import Info from '../../../components/Info.astro';
+import { href, pages, type PageId } from '../../../lib/site';
+
+const page = 'PG-021';
+const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScl-ALHH0QmL_u1gY3RdhBBss0UVapCML0di3CQSORxM22oNA/viewform?embedded=true';
+
+type AnswerPart = string | { text: string; to: PageId | `https://${string}` };
+const groups: { heading: string; items: { question: string; answer: AnswerPart[] }[] }[] = [
+  {
+    heading: "大会全体",
+    items: [
+      { question: "大会はトーナメント方式ですか？", answer: ["はい。チーム戦のトーナメント方式で行います。"] },
+      { question: "大会の開催日はいつですか？", answer: ["2026年12月19日（土）18:00開始予定としてます。参加チーム数に寄り時間変更される場合があります。"] },
+      { question: "異なるプラットフォームの選手が同じチームで参加できますか？", answer: ["可能ですが、参加可能なプラットフォームは、Steam／Epic Games／PlayStation のみとさせていただいてます。"] },
+      { question: "大会に関する最新情報はどこで確認できますか？", answer: [{"text":"トップページ","to":"PG-002"},"の「お知らせ」欄にてご確認ください。"] },
+    ],
+  },
+  {
+    heading: "大会申込",
+    items: [
+      { question: "１チーム何人までですか？", answer: ["最低４人、最大５人です。チームメンバーでキラーを担当していただきます。"] },
+      { question: "大会には個人で応募できますか？", answer: ["チーム単位での申込となります。"] },
+      { question: "応募にはXやDiscordアカウントが必要ですか？", answer: ["チームリーダーには、運営との連絡用としてXアカウントが必要です。また、大会当日の連絡・運営に使用するため、参加者全員にDiscordアカウントが必要です。"] },
+      { question: "応募が募集予定数を超えた場合はどうなりますか？", answer: ["抽選となります。抽選方式は非公開とさせてください。"] },
+      { question: "申込後にチーム内で欠員が出た場合はどうすればよいですか？", answer: ["チームで欠員を補填してください。もし、補填が難しいようでしたら、辞退していただく場合もあります。運営までご連絡ください。"] },
+    ],
+  },
+  {
+    heading: "大会ルール",
+    items: [
+      { question: "各チームはキラー側とサバイバー側の両方で試合を行いますか？", answer: ["両方で試合を行います。"] },
+      { question: "大会の詳しいルールはどこで確認できますか？", answer: [{"text":"大会概要","to":"PG-004"},"、",{"text":"大会ルール詳細","to":"PG-006"},"、よりご確認ください。"] },
+      { question: "試合の組み合わせはどこで確認できますか？", answer: ["対戦表、からご確認ください。"] },
+      { question: "大会ルールが変更された場合は、どのように告知されますか？", answer: [{"text":"トップページ","to":"PG-002"},"の「お知らせ」欄にて確認いただけるようにします。当日変更の場合は、別途参加者向け・視聴者向けにアナウンスいたします。"] },
+    ],
+  },
+  {
+    heading: "サバイバー：ルール",
+    items: [
+      { question: "サバイバーのアイテム持ち込みはできますか？", answer: ["アイテム持ち込みは禁止です。マッチ内のチェスト開放はOKですが、アイテムの使用は禁止です。"] },
+      { question: "サバイバーのパークは、自由に選ぶことができますか？", answer: ["自由には選べません。使用指定パークから2つを使用し、残りの2枠には禁止パーク以外から選択できます。また、チーム内で同じパークを複数人が使用することは禁止です。"] },
+      { question: "サバイバー側で使用できるキャラクターに制限はありますか？", answer: ["使用できるキャラクターに制限はありませんが、チーム内で複数人での使用は禁止です。他の３人とは違うキャラクターを利用ください。"] },
+      { question: "指定パークは何個選ぶ必要がありますか？また、それはどこで確認できますか？", answer: ["使用指定パークから２つ選ぶ必要があります。対象となるパークは",{"text":"サバイバー：ルール","to":"PG-007"},"でご確認ください。"] },
+      { question: "指定パーク以外のパーク枠には何を選択できますか？", answer: [{"text":"サバイバー：ルール","to":"PG-007"},"、で指定パーク及び禁止指定されているパーク以外のパークでしたら選択可能です。"] },
+      { question: "同じパークをチーム内の複数人で使用できますか？", answer: ["チーム内でパークの利用被りは禁止です。"] },
+    ],
+  },
+  {
+    heading: "キラー：ルール",
+    items: [
+      { question: "使うキラーは、どうやって決まるのですか？", answer: ["キラー担当者がルーレットでTierランク（S～D）を決定し、そのランクに属するキラーの中から使用するキラーを選びます。"] },
+      { question: "キラーを決めるルーレットは、いつやりますか？", answer: ["初回は大会開催前に行います。2試合目以降は、試合までの待機時間中に行います。"] },
+      { question: "Tier表の中から使うキラーを申告する必要がありますか？", answer: ["必要ありません。試合開始時に運営側でチェックします。"] },
+      { question: "キラーの担当者は、試合ごとに変更できますか？", answer: ["変更できます。ただし、ルーレットを回す前までです。ルーレットにてTierランクが決まった後の変更は認められません。"] },
+      { question: "キラーTier表はどこで確認できますか？", answer: [{"text":"キラー：ルール","to":"PG-008"},"、にて確認できます。"] },
+      { question: "ルーレットをやり直すことはできますか？", answer: ["ルーレットのやり直しは原則認められません。"] },
+      { question: "キラーに使用禁止パーク・アドオンはありますか？", answer: ["あります。詳細は、",{"text":"キラー：ルール","to":"PG-008"},"、にて確認できます。"] },
+      { question: "前の試合で使ったパークやアドオンを、次の試合でも使用できますか？", answer: ["使用可能です。"] },
+    ],
+  },
+  {
+    heading: "マッチルール",
+    items: [
+      { question: "マップの指定は誰がするのですか？", answer: ["その試合のキラー担当の人がマップの指定をします"] },
+      { question: "チーム内でＶＣを使っても良いですか？", answer: ["はい。サバイバー側・キラー側ともに、チーム内でVCを使用できます。大会運営がチーム専用のDiscordチャンネルを用意しますので、そちらをご利用ください。"] },
+      { question: "試合中に回線切断などのトラブルが発生した場合、再試合になりますか？", answer: ["5分未満の切断は再試合となります。5分以上なら、試合は成立したモノとして、吊り数・発電数・脱出数でポイント計算します。"] },
+      { question: "試合の勝敗は、どのように判定されますか？", answer: ["各チームがキラー側・サバイバー側の両方でマッチを行い、それぞれのマッチで獲得したポイントの合計によって勝敗を判定します。"] },
+    ],
+  },
+  {
+    heading: "配信・観戦",
+    items: [
+      { question: "大会のライブ配信はどこで視聴できますか？", answer: ["大会のライブ配信先は、決まり次第トップページの「お知らせ」欄でご案内します。",{"text":"べちぃ___","to":"https://www.twitch.tv/sara__channel"},"にて配信予定です。"] },
+      { question: "大会参加者が自分のチャンネルで試合を配信することはできますか？", answer: ["禁止とさせていただいてます。"] },
+      { question: "参加者のボイスチャットが大会配信に流れることはありますか？", answer: ["インタビューなどで配信にのる事はある場合がありますが、マッチ中のVCは配信にのせない予定です。"] },
+      { question: "大会配信にトラブルが発生した場合、どこで案内されますか？", answer: [{"text":"トップページ","to":"PG-002"},"の「お知らせ」欄にて確認いただけるようにします。当日変更の場合は、別途参加者向け・視聴者向けにアナウンスいたします。"] },
+    ],
+  },
+];
 ---
-<ComingSoon page="PG-021" />
+<Page page={page}>
+  <article class="faq">
+    <h1>{pages[page][0]}</h1>
+    <Info title="よくある質問">
+      {groups.map(({ heading, items }) => (
+        <section class="faq-group">
+          <h3>{heading}</h3>
+          <div class="faq-items">
+            {items.map(({ question, answer }) => (
+              <div class="faq-item">
+                <p class="faq-question">Q. {question}</p>
+                <p class="faq-answer">A. {answer.map((part) => (
+                  typeof part === 'string' ? part : part.to.startsWith('https://') ? (
+                    <a class="text-link" href={part.to} target="_blank" rel="noopener">{part.text}</a>
+                  ) : (
+                    <a class="text-link" href={href(page, part.to as PageId)}>{part.text}</a>
+                  )
+                ))}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </Info>
+    <Info title="お問い合わせ">
+      <div class="form-decoration">
+        <div class="form-display">
+          <iframe
+            class="pg021__form-iframe"
+            src={formUrl}
+            title="お問い合わせフォーム"
+            width="640"
+            height="1372"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+          >読み込んでいます…</iframe>
+        </div>
+      </div>
+    </Info>
+  </article>
+</Page>
+
+<style>
+  .faq {
+    --group-gap: 16px;
+    --item-gap: 12px;
+    --heading-gap: 12px;
+    --card-text: 14px;
+    padding-block: 20px;
+  }
+
+  h1 { margin: 0 0 18px; }
+  .faq :global(.info) { border-radius: 10px; }
+  .faq :global(.info > h2) { margin-bottom: var(--heading-gap); }
+  .faq-group + .faq-group { margin-top: var(--group-gap); }
+  h3 { margin: 0 0 var(--heading-gap); font-size: 16px; }
+  h1, h3, .faq :global(.info > h2), .faq-question { font-weight: 700; }
+  .faq-items { display: grid; gap: var(--item-gap); }
+  .faq-item { border-radius: 10px; overflow: hidden; }
+  .faq-question, .faq-answer {
+    margin: 0;
+    padding: var(--item-gap);
+    font-size: var(--card-text);
+  }
+  .faq-question { background: #EBF8FB; }
+  .faq-answer {
+    background: #FFFFFF;
+    font-weight: 400;
+    padding-inline-start: calc(2 * var(--item-gap));
+  }
+
+  .form-decoration, .form-display {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #00A1BF;
+    border-radius: 10px;
+  }
+  .form-decoration { background: #EBF8FB; padding: var(--item-gap); }
+  .form-display { background: #FFFFFF; margin-inline: auto; }
+  .pg021__form-iframe {
+    display: block;
+    width: 640px;
+    max-width: 100%;
+    height: 1372px;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 961px) {
+    .faq {
+      --group-gap: 20px;
+      --item-gap: 16px;
+      --heading-gap: 16px;
+      --card-text: 16px;
+      padding-block: 24px;
+    }
+    h1 { margin-bottom: 20px; font-size: 30px; line-height: 1.4; }
+    .faq :global(.info > h2) {
+      border-bottom: 1px solid #DFF1F5;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+    h3 { font-size: 18px; line-height: 1.5; }
+    .faq-question, .faq-answer { line-height: 1.6; }
+  }
+</style>
