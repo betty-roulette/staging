@@ -5,7 +5,22 @@ import ReferencedImage from '../../components/ReferencedImage.astro';
 import ImageCard from '../../components/ImageCard.astro';
 import { href, pages, type PageId } from '../../lib/site';
 const page = 'PG-002';
-const notices = [{ date: '2026-11-05', text: '2026/11/5　べちぱーCup Vol.1の大会公式サイトを公開しました。大会概要・大会ルール・スケジュールなどの情報をご案内しています。' }];
+type NoticePart = string | { label: string; to: PageId };
+const notices: { date: string; text: string | NoticePart[] }[] = [
+  {
+    date: '2026-11-08',
+    text: [
+      '2026/11/8　',
+      { label: 'お問合せ・よくある質問', to: 'PG-021' },
+      '、',
+      { label: '注意事項・免責事項', to: 'PG-019' },
+      '、',
+      { label: 'プライバシー・権利情報', to: 'PG-022' },
+      ' を更新しました',
+    ],
+  },
+  { date: '2026-11-05', text: '2026/11/5　べちぱーCup Vol.1の大会公式サイトを公開しました。大会概要・大会ルール・スケジュールなどの情報をご案内しています。' },
+];
 const visibleNotices = [...notices].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
 const other: PageId[] = ['PG-021', 'PG-020', 'PG-019', 'PG-022'];
 ---
@@ -17,7 +32,13 @@ const other: PageId[] = ['PG-021', 'PG-020', 'PG-019', 'PG-022'];
       <p>このページでは、大会概要、ルール、スケジュール、参加者情報、大会当日の案内、大会結果など、べちぱーCup Vol.1に関する情報をまとめてご案内します。</p>
     </div>
   </section>
-  <Info title="お知らせ" class="notice">{visibleNotices.map((notice) => <p>{notice.text}</p>)}</Info>
+  <Info title="お知らせ" class="notice">
+    {visibleNotices.map(({ text }) => (
+      <p>{typeof text === 'string' ? text : text.map((part) => (
+        typeof part === 'string' ? part : <a class="text-link" href={href(page, part.to)}>{part.label}</a>
+      ))}</p>
+    ))}
+  </Info>
   <section class="guides"><h2>大会情報のご案内</h2><div class="image-links">
     <ImageCard page={page} to="PG-004" image="IMG-003" />
     <ImageCard page={page} to="PG-005" image="IMG-004" />
