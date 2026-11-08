@@ -32,6 +32,15 @@ const other: PageId[] = ['PG-021', 'PG-020', 'PG-019', 'PG-022'];
       <p>このページでは、大会概要、ルール、スケジュール、参加者情報、大会当日の案内、大会結果など、べちぱーCup Vol.1に関する情報をまとめてご案内します。</p>
     </div>
   </section>
+  <iframe
+    src="https://www.youtube.com/embed/nuPGM8GuxuE?si=9RxtjQyCp9z7FtqB"
+    title="YouTube video player"
+    loading="lazy"
+    style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0;"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
   <Info title="お知らせ" class="notice">
     {visibleNotices.map(({ text }) => (
       <p>{typeof text === 'string' ? text : text.map((part) => (
