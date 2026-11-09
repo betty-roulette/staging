@@ -41,7 +41,8 @@ const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
     referrerpolicy="strict-origin-when-cross-origin"
     allowfullscreen
   ></iframe>
-  <Info title="お知らせ" class="notice">
+  <h2 class="notice-heading">お知らせ</h2>
+  <Info class="notice">
     <table class="notice-table" aria-label="お知らせの日付と本文">
       <tbody>
         {visibleNotices.map(({ date, text }) => (
@@ -72,9 +73,21 @@ const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
 </Page>
 
 <style is:global>
-  .pg002 iframe + .notice,
+  .pg002 .notice-heading,
   .pg002 .guides > h2,
-  .pg002 .other-guides > h2 { margin-top: 28px; }
+  .pg002 .other-guides > h2 { margin-block: 36px 8px; }
+
+  /* The notice's top border and padding each contribute 4px to the gap. */
+  .pg002 .notice-heading { margin-bottom: 0; }
+  .pg002 .notice { padding-top: 4px; }
+
+  /* Include the card border in the gap to the image element. */
+  .pg002 .guides > h2 { margin-bottom: 4px; }
+  @media (max-width: 960px) {
+    .pg002 .guides > h2 { margin-bottom: 7px; }
+  }
+
+  .pg002 .other-guides .text-links a { align-items: flex-start; }
 
   .pg002 .notice-table { border-collapse: collapse; font: inherit; }
   .pg002 .notice-table td { border: 0; padding: 0; vertical-align: top; }
