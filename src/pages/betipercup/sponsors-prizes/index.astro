@@ -10,13 +10,13 @@ const sponsors: { name: string; image: ImageId }[] = [
   { name: '匿名さま', image: 'IMG-802' },
 ];
 ---
-<Page page={page} favicon={false}>
+<Page page={page}>
   <h1>{pages[page][0]}</h1>
   <Info title="協賛">
-    <p>本大会の開催にあたり、以下の企業・団体よりご協賛をいただいております。</p>
+    <p>本大会の開催にあたり、以下の方々よりご協賛をいただいております。</p>
     <div class="sponsor-grid">
       {sponsors.map(({ name, image }) => (
-        <div>
+        <div class="sponsor">
           <ReferencedImage id={image} class="full-image" />
           <div>{name}</div>
         </div>
@@ -45,6 +45,12 @@ const sponsors: { name: string; image: ImageId }[] = [
     column-gap: 16px;
     text-align: center;
     overflow-wrap: anywhere;
+  }
+  .pg024 .sponsor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   @media (max-width: 960px) {
     .pg024 .sponsor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
