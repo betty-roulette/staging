@@ -21,6 +21,7 @@ export const pages = {
   'PG-020': ['運営者紹介', '/betipercup/organizer/'],
   'PG-021': ['お問い合わせ・よくある質問', '/betipercup/faq/'],
   'PG-022': ['プライバシー・権利情報', '/betipercup/privacy/'],
+  'PG-024': ['協賛・賞金', '/betipercup/sponsors-prizes/'],
 } as const;
 export type PageId = keyof typeof pages;
 
@@ -48,5 +49,8 @@ export const images = {
   'IMG-014': ['IMG-014_intro.png', '参加者紹介'],
   'IMG-015': ['IMG-015_bracket.png', '対戦表'],
   'IMG-016': ['IMG-016_agenda.png', '大会当日スケジュール'],
+  'IMG-022': ['IMG-022_sponsor.png', '協賛・賞金'],
+  'IMG-801': ['IMG-801_sponsor-01.png', '協賛：ROH'],
+  'IMG-802': ['IMG-802_sponsor-02.png', '協賛：匿名'],
 } as const;
 export type ImageId = keyof typeof images;

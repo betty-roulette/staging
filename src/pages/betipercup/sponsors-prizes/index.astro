@@ -1,0 +1,53 @@
+---
+import Page from '../../../layouts/Page.astro';
+import Info from '../../../components/Info.astro';
+import ReferencedImage from '../../../components/ReferencedImage.astro';
+import { pages, type ImageId } from '../../../lib/site';
+
+const page = 'PG-024';
+const sponsors: { name: string; image: ImageId }[] = [
+  { name: 'ROHさま', image: 'IMG-801' },
+  { name: '匿名さま', image: 'IMG-802' },
+];
+---
+<Page page={page} favicon={false}>
+  <h1>{pages[page][0]}</h1>
+  <Info title="協賛">
+    <p>本大会の開催にあたり、以下の企業・団体よりご協賛をいただいております。</p>
+    <div class="sponsor-grid">
+      {sponsors.map(({ name, image }) => (
+        <div>
+          <ReferencedImage id={image} class="full-image" />
+          <div>{name}</div>
+        </div>
+      ))}
+    </div>
+  </Info>
+  <Info title="賞金">
+    <table class="rules-table">
+      <thead>
+        <tr><th scope="col">賞の名称</th><th scope="col">賞金</th><th scope="col">備考</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">優勝</th><td>金額未定</td><td>―</td></tr>
+        <tr><th scope="row">検討中</th><td>金額未定</td><td>現在検討中です。</td></tr>
+      </tbody>
+    </table>
+  </Info>
+</Page>
+
+<style is:global>
+  .pg024 main > h1 { margin-bottom: 20px; }
+  .pg024 .info { border-radius: 10px; }
+  .pg024 .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 16px;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 960px) {
+    .pg024 .sponsor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pg024 .rules-table tr { height: auto; }
+  }
+</style>
