@@ -47,11 +47,12 @@ const sponsors: { name: string; image: ImageId }[] = [
     overflow-wrap: anywhere;
   }
   .pg024 .sponsor {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    justify-items: center;
   }
+  .pg024 .sponsor > .full-image { align-self: center; }
   @media (max-width: 960px) {
     .pg024 .sponsor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .pg024 .rules-table tr { height: auto; }
