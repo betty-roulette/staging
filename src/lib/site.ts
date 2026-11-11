@@ -52,5 +52,6 @@ export const images = {
   'IMG-022': ['IMG-022_sponsor.png', '協賛・賞金'],
   'IMG-801': ['IMG-801_sponsor-01.png', '協賛：ROH'],
   'IMG-802': ['IMG-802_sponsor-02.png', '協賛：匿名'],
+  'IMG-803': ['IMG-803_sponsor-03.png', '協賛：KARINGA'],
 } as const;
 export type ImageId = keyof typeof images;
