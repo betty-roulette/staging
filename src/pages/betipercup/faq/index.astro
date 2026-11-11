@@ -7,7 +7,7 @@ const page = 'PG-021';
 const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScl-ALHH0QmL_u1gY3RdhBBss0UVapCML0di3CQSORxM22oNA/viewform?embedded=true';
 
 type AnswerPart = string | { text: string; to: PageId | `https://${string}` };
-const groups: { heading: string; items: { question: string; answer: AnswerPart[] }[] }[] = [
+const groups: { heading: string; items: { question: string; answer: AnswerPart[]; followUp?: string }[] }[] = [
   {
     heading: "大会全体",
     items: [
@@ -21,10 +21,14 @@ const groups: { heading: string; items: { question: string; answer: AnswerPart[]
     heading: "大会申込",
     items: [
       { question: "１チーム何人までですか？", answer: ["最低４人、最大５人です。チームメンバーでキラーを担当していただきます。"] },
-      { question: "大会には個人で応募できますか？", answer: ["チーム単位での申込となります。"] },
+      { question: "大会には個人で応募できますか？", answer: ["はい、個人でもお申し込みいただけます。ただし、個人参加の場合は大会運営側でチームを編成するため、参加人数やキラー担当者の状況によっては、大会に参加できない場合があります。詳しくは募集要項をご確認ください。"] },
       { question: "応募にはXやDiscordアカウントが必要ですか？", answer: ["チームリーダーには、運営との連絡用としてXアカウントが必要です。また、大会当日の連絡・運営に使用するため、参加者全員にDiscordアカウントが必要です。"] },
       { question: "応募が募集予定数を超えた場合はどうなりますか？", answer: ["抽選となります。抽選方式は非公開とさせてください。"] },
-      { question: "申込後にチーム内で欠員が出た場合はどうすればよいですか？", answer: ["チームで欠員を補填してください。もし、補填が難しいようでしたら、辞退していただく場合もあります。運営までご連絡ください。"] },
+      {
+        question: "申込後にチーム内で欠員が出た場合はどうすればよいですか？",
+        answer: ["チームで欠員を補填してください。もし、補填が難しいようでしたら、辞退していただく場合もあります。運営までご連絡ください。"],
+        followUp: "また、個人参加で申し込まれたチームの場合は運営側にて対処いたしますので、欠員が出ましたら運営までご連絡ください。参加条件に満たなかった場合は大会参加ができなくなる場合もありますのでご了承ください。",
+      },
     ],
   },
   {
@@ -88,7 +92,7 @@ const groups: { heading: string; items: { question: string; answer: AnswerPart[]
         <section class="faq-group">
           <h3>{heading}</h3>
           <div class="faq-items">
-            {items.map(({ question, answer }) => (
+            {items.map(({ question, answer, followUp }) => (
               <div class="faq-item">
                 <p class="faq-question">Q. {question}</p>
                 <p class="faq-answer">A. {answer.map((part) => (
@@ -97,7 +101,7 @@ const groups: { heading: string; items: { question: string; answer: AnswerPart[]
                   ) : (
                     <a class="text-link" href={href(page, part.to as PageId)}>{part.text}</a>
                   )
-                ))}</p>
+                ))}{followUp && <><br /><br />{followUp}</>}</p>
               </div>
             ))}
           </div>

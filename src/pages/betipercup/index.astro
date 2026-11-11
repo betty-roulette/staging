@@ -40,7 +40,7 @@ const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
     src="https://www.youtube.com/embed/nuPGM8GuxuE?si=9RxtjQyCp9z7FtqB"
     title="YouTube video player"
     loading="lazy"
-    style="display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0;"
+    style="display: block; width: calc(100% * 2 / 3); height: auto; aspect-ratio: 16 / 9; margin-inline: auto; border: 0;"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     referrerpolicy="strict-origin-when-cross-origin"
     allowfullscreen
@@ -51,7 +51,7 @@ const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
       <tbody>
         <tr>
           <td><strong>参加者募集中</strong></td>
-          <td>参加者募集を開始しました。<a class="text-link" href={href(page, 'PG-011')}>募集要項</a>より申込ください。</td>
+          <td>参加者募集を開始しました。<a class="text-link" href={href(page, 'PG-011')}>募集要項</a>より申込ください。個人での参加申込も可能になりました。</td>
         </tr>
         {visibleNotices.map(({ date, text }) => (
           <tr>

@@ -4,9 +4,20 @@ import Info from '../../../../components/Info.astro';
 import { href } from '../../../../lib/site';
 
 const page = 'PG-011';
-const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdFkS9jC6Zftel7-qMkA_b1yBlFTOUzWKtzt8BlTCuamK7r1w/viewform?embedded=true';
+const forms = [
+  {
+    heading: '参加申込：チーム',
+    title: '参加申込フォーム',
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSdFkS9jC6Zftel7-qMkA_b1yBlFTOUzWKtzt8BlTCuamK7r1w/viewform?embedded=true',
+  },
+  {
+    heading: '参加申込：個人',
+    title: '個人参加申込フォーム',
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSffCNwcZsMdMEW_6vpBs3ZiyK6Lr0DDERgYvVnygjLdDI2T6A/viewform?embedded=true',
+  },
+];
 const rows = [
-  ['応募単位', ['チーム単位で応募する']],
+  ['応募単位', ['チーム応募に加え、個人参加も受け付ける']],
   ['チーム人数', ['4～5人']],
   ['募集チーム数', ['最小4チーム']],
   ['応募条件', ['18歳以上／BAN歴がないこと', 'Discord・Xを利用できること']],
@@ -16,8 +27,8 @@ const rows = [
   ['応募多数の場合', ['抽選で決定']],
   ['参加確定', ['対戦表発表時に参加確定']],
   ['連絡方法', ['Xのダイレクトメッセージで連絡']],
-  ['欠員の扱い', ['チームに欠員が生じた場合、チーム側で補填する']],
-  ['参加時の同意', ['大会ルール・注意事項／免責事項への同意', '名前の表示・配信での音声利用への同意']],
+  ['欠員の扱い', ['チーム応募のチームに欠員が生じた場合、チーム側で補填すること。個人参加のチームに欠員が生じた場合は運営側にて対処する']],
+  ['参加時の同意', ['大会ルール・注意事項／免責事項への同意', 'プライバシー・権利情報への同意']],
   ['個人情報の利用', ['本大会の主催者が開催する大会・イベントにのみ利用']],
   ['関連ページ', ['注意事項・免責事項', 'お問い合わせ・よくある質問']],
 ] as const;
@@ -44,22 +55,24 @@ const rows = [
       </tbody>
     </table>
   </Info>
-  <Info title="募集">
-    <div class="form-decoration">
-      <div class="form-display">
-        <iframe
-          class="pg011__form-iframe"
-          src={formUrl}
-          title="参加申込フォーム"
-          width="640"
-          height="825"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-        >読み込んでいます…</iframe>
+  {forms.map(({ heading, title, url }) => (
+    <Info title={heading}>
+      <div class="form-decoration">
+        <div class="form-display">
+          <iframe
+            class="pg011__form-iframe"
+            src={url}
+            title={title}
+            width="640"
+            height="825"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+          >読み込んでいます…</iframe>
+        </div>
       </div>
-    </div>
-  </Info>
+    </Info>
+  ))}
   <p class="parent-link"><a class="text-link" href={href(page, 'PG-010')}>参加者 に戻る</a></p>
 </Page>
 
