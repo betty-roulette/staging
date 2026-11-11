@@ -28,7 +28,7 @@ const rows = [
   ['参加確定', ['対戦表発表時に参加確定']],
   ['連絡方法', ['Xのダイレクトメッセージで連絡']],
   ['欠員の扱い', ['チーム応募のチームに欠員が生じた場合、チーム側で補填すること。個人参加のチームに欠員が生じた場合は運営側にて対処する']],
-  ['参加時の同意', ['大会ルール・注意事項／免責事項への同意', 'プライバシー・権利情報への同意']],
+  ['参加時の同意', ['大会ルール・注意事項／免責事項への同意', 'プライバシー・権利情報']],
   ['個人情報の利用', ['本大会の主催者が開催する大会・イベントにのみ利用']],
   ['関連ページ', ['注意事項・免責事項', 'お問い合わせ・よくある質問']],
 ] as const;
@@ -45,7 +45,7 @@ const rows = [
             <th scope="row">{label}</th>
             <td>
               {label === '参加時の同意' ? (
-                <><a class="text-link" href={href(page, 'PG-005')}>大会ルール</a>・<a class="text-link" href={href(page, 'PG-019')}>注意事項／免責事項</a>への同意<br />{lines[1]}</>
+                <><a class="text-link" href={href(page, 'PG-005')}>大会ルール</a>・<a class="text-link" href={href(page, 'PG-019')}>注意事項／免責事項</a>への同意<br /><a class="text-link" href={href(page, 'PG-022')}>{lines[1]}</a>への同意</>
               ) : label === '関連ページ' ? (
                 <><a class="text-link" href={href(page, 'PG-019')}>{lines[0]}</a><br /><a class="text-link" href={href(page, 'PG-021')}>{lines[1]}</a></>
               ) : lines.map((line, i) => <>{i > 0 && <br />}{line}</>)}
