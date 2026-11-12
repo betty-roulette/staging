@@ -14,7 +14,7 @@ const cards: { name: string; image: ImageId }[] = [
 <Page page={page}>
   <h1>スケジュール：全体</h1>
   <Info title="大会全体の日程・主要予定"><ReferencedImage id="IMG-013" class="full-image" /></Info>
-  <Info title="大会当日スケジュールへのご案内">
+  <Info class="schedule-card-section">
     <div class="link-group">
       <div class="image-links">
         {cards.map(({ name, image }) => (
@@ -29,12 +29,16 @@ const cards: { name: string; image: ImageId }[] = [
 </Page>
 
 <style>
+  :global(.pg009 .schedule-card-section) {
+    border: 0;
+    padding: 20px;
+  }
   .link-group { margin-top: 32px; }
   @media (max-width: 960px) {
+    :global(.pg009 .schedule-card-section) { padding: 18px; }
     .link-group {
       margin-top: 16px;
-      border: 4px solid #00A1BF;
-      padding: 14px;
+      padding: 18px;
     }
   }
 </style>
