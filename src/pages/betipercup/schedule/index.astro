@@ -2,12 +2,39 @@
 import Page from '../../../layouts/Page.astro';
 import Info from '../../../components/Info.astro';
 import ReferencedImage from '../../../components/ReferencedImage.astro';
+import type { ImageId } from '../../../lib/site';
+
 const page = 'PG-009';
+const cards: { name: string; image: ImageId }[] = [
+  { name: 'タイムテーブル（当日）', image: 'IMG-016' },
+  { name: '参加者紹介', image: 'IMG-014' },
+  { name: '配信情報', image: 'IMG-017' },
+];
 ---
 <Page page={page}>
   <h1>スケジュール：全体</h1>
   <Info title="大会全体の日程・主要予定"><ReferencedImage id="IMG-013" class="full-image" /></Info>
   <Info title="大会当日スケジュールへのご案内">
-    <div class="agenda-card"><div class="agenda-image"><ReferencedImage id="IMG-016" class="full-image" /></div><div class="agenda-label">大会当日スケジュール</div></div>
+    <div class="link-group">
+      <div class="image-links">
+        {cards.map(({ name, image }) => (
+          <div class="image-card">
+            <span class="image-stage"><ReferencedImage id={image} /></span>
+            <span class="image-label"><span>{name}</span></span>
+          </div>
+        ))}
+      </div>
+    </div>
   </Info>
 </Page>
+
+<style>
+  .link-group { margin-top: 32px; }
+  @media (max-width: 960px) {
+    .link-group {
+      margin-top: 16px;
+      border: 4px solid #00A1BF;
+      padding: 14px;
+    }
+  }
+</style>

@@ -5,23 +5,44 @@ import ReferencedImage from '../../../components/ReferencedImage.astro';
 import { href, type ImageId } from '../../../lib/site';
 
 const page = 'PG-010';
-const cards: { name: string; image: ImageId; enabled: boolean }[] = [
-  { name: '募集要項', image: 'IMG-010', enabled: true },
-  { name: '参加者紹介', image: 'IMG-014', enabled: false },
-  { name: '対戦表', image: 'IMG-015', enabled: false },
+const cards: { name: string; heading?: string; image: ImageId; enabled: boolean; description: [string, string] }[] = [
+  {
+    name: '募集要項', image: 'IMG-010', enabled: true,
+    description: [
+      '大会への参加を希望される方に向けて、応募条件や参加方法などをご案内しています。',
+      'チーム・個人それぞれの参加申込フォームもご用意しています。',
+    ],
+  },
+  {
+    name: '参加者紹介', image: 'IMG-014', enabled: false,
+    description: [
+      '大会に参加するチームやメンバーをご紹介しています。',
+      '各チームの意気込みや参加者の情報などをご覧いただけます。',
+    ],
+  },
+  {
+    name: '対戦表', heading: '対戦・トーナメント表', image: 'IMG-015', enabled: false,
+    description: [
+      '大会に参加するチーム同士の対戦組み合わせ（トーナメント表）をご案内しています。',
+      '試合の対戦順や大会の進行状況などをご確認いただけます。',
+    ],
+  },
 ];
 ---
 <Page page={page}>
   <h1>参加者</h1>
-  {cards.map(({ name, image, enabled }) => {
+  {cards.map(({ name, heading = name, image, enabled, description }) => {
     const Card = enabled ? 'a' : 'div';
     return (
-      <Info title={name}>
+      <Info title={heading}>
         <Card class:list={['participant-card', { 'is-disabled': !enabled }]} href={enabled ? href(page, 'PG-011') : undefined}>
           <span class="participant-image"><ReferencedImage id={image} class="full-image" /></span>
-          <span class="participant-label">
-            <span>{name}</span>
-            {enabled && <span class="arrow participant-arrow" aria-hidden="true">→</span>}
+          <span class="participant-details">
+            <span class="participant-label">
+              <span>{name}</span>
+              {enabled && <span class="arrow participant-arrow" aria-hidden="true">→</span>}
+            </span>
+            <span>{description[0]}<br />{description[1]}</span>
           </span>
         </Card>
       </Info>
@@ -52,6 +73,14 @@ const cards: { name: string; image: ImageId; enabled: boolean }[] = [
     border: 1px solid #00A1BF;
     border-radius: 10px;
     overflow: hidden;
+  }
+  .participant-details {
+    align-self: stretch;
+    display: grid;
+    align-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: #FFFFFF;
   }
   .participant-label { display: flex; align-items: center; justify-content: space-between; }
   .participant-arrow { background: #FFFFFF; }

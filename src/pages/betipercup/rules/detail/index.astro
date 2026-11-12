@@ -15,7 +15,7 @@ interface RuleCard {
 // No.21: paragraph/list boundaries are maintained independently of display width.
 const rules: RuleCard[] = [
   { title: '試合の進行', paragraphs: ['各チームがキラー側・サバイバー側の両方を担当する。'] },
-  { title: '得点集計', bullets: ['サバイバー：発電した台数＋脱出', 'キラー：吊り数＋全滅（2ポイント）'] },
+  { title: '得点集計', bullets: ['サバイバー：発電した台数（×1ポイント）＋脱出人数（×1ポイント）', 'キラー：吊り数（×1ポイント）＋全滅（2ポイント）'] },
   { title: '勝敗判定', paragraphs: ['サバイバー＋キラーのポイントが多いチーム。'] },
   { title: '同ポイント時の優先順位', paragraphs: ['サバのリザルト２位のBPスコア上位が勝利。'] },
   { title: 'マップ', paragraphs: ['キラーが以下から選択する。'], maps: [
@@ -66,3 +66,7 @@ const penalties: RuleCard[] = [
   </div></div>
   <p class="parent-link"><a class="text-link" href={href(page, 'PG-005')}>大会ルール概要・詳細 に戻る</a></p>
 </Page>
+
+<style>
+  .rule-card h3 { padding-left: 0.5em; }
+</style>
