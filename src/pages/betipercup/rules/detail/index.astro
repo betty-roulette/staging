@@ -8,7 +8,7 @@ interface RuleCard {
   title: string;
   paragraphs?: string[];
   bullets?: string[];
-  maps?: string[];
+  maps?: [string, string, string][];
   after?: string;
   contact?: boolean;
 }
@@ -19,11 +19,11 @@ const rules: RuleCard[] = [
   { title: '勝敗判定', paragraphs: ['サバイバー＋キラーのポイントが多いチーム。'] },
   { title: '同ポイント時の優先順位', paragraphs: ['サバのリザルト２位のBPスコア上位が勝利。'] },
   { title: 'マップ', paragraphs: ['キラーが以下から選択する。'], maps: [
-    '①ギデオン食肉工場：ザ・ゲーム',
-    '②壊滅したボルゴ：忘れ去られた遺跡',
-    '③マクミラン・エステート：コールタワー',
-    '④オートヘイヴン国立研究所：地下施設',
-    '⑤スプリングウッド：バダム幼稚園Ⅱ（ボーナスマップ）',
+    ['①', 'ギデオン食肉工場', 'ザ・ゲーム'],
+    ['②', '壊滅したボルゴ', '忘れ去られた遺跡'],
+    ['③', 'マクミラン・エステート', 'コールタワー'],
+    ['④', 'オートヘイヴン国立研究所', '地下施設'],
+    ['⑤', 'スプリングウッド', 'バダム幼稚園Ⅱ（ボーナスマップ）'],
   ] },
   { title: '試合結果の報告', paragraphs: ['キラー担当はマッチのリザルト画面のスクリーンショットを運営に提出する。'] },
   { title: 'ボイスチャット', paragraphs: ['同一チーム内でのVCはOKです。大会側で専用チャンネルを準備します。'] },
@@ -54,7 +54,12 @@ const penalties: RuleCard[] = [
     <div class="rule-cards">{group.cards.map((card) => <section class="rule-card">
       <h3>{card.title}</h3>
       {card.paragraphs?.map((text) => <p>{text}</p>)}
-      {card.maps && <ol class="maps">{card.maps.map((text) => <li>{text}</li>)}</ol>}
+      {card.maps && (
+        <table class="map-table" aria-label={card.title}>
+          <thead><tr><th scope="col">No.</th><th scope="col">領域名</th><th scope="col">マップ名</th></tr></thead>
+          <tbody>{card.maps.map(([number, realm, map]) => <tr><td>{number}</td><td>{realm}</td><td>{map}</td></tr>)}</tbody>
+        </table>
+      )}
       {card.bullets && <ul>{card.bullets.map((text) => <li>{text}</li>)}</ul>}
       {card.after && <p>{card.after}</p>}
       {card.contact && <p>質問や申告などは「<a class="text-link" href={href(page, 'PG-021')}>問合せフォーム</a>」よりお願いいたします。</p>}
@@ -69,4 +74,10 @@ const penalties: RuleCard[] = [
 
 <style>
   .rule-card h3 { padding-left: 0.5em; }
+  .map-table { border-collapse: collapse; }
+  .map-table :is(th, td) { padding: 4px 8px; border: 1px solid #00A1BF; }
+  .map-table th { background: #DFF1F5; font-weight: 700; }
+  .map-table td { background: #FFFFFF; text-align: left; }
+  .map-table tbody tr:nth-child(odd) td { background: #F1F9FB; }
+  .map-table th, .map-table td:first-child { text-align: center; }
 </style>
