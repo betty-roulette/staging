@@ -85,6 +85,9 @@ const rows = [
   .pg008 .rules-table .banned-addons :is(th, td) {
     padding-inline: 8px;
   }
+  .pg008 .rules-table .banned-addons th:is([scope="col"], [scope="rowgroup"]) {
+    text-align: center;
+  }
   .pg008 .rules-table .banned-addons tbody td { font-weight: inherit; background: #FFFFFF; }
   .pg008 .rules-table .banned-addons tbody .alternate-row > td { background: #F1F9FB; }
   .pg008 .rules-table .banned-addons tr > :is(th, td) + :is(th, td),
