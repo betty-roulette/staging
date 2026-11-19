@@ -57,6 +57,7 @@ export const images = {
   'IMG-019': ['IMG-019_progress.png', '試合結果・進行状況'],
   'IMG-501': ['IMG-501_tournament.png', 'トーナメント表'],
   'IMG-022': ['IMG-022_sponsor.png', '協賛・賞金'],
+  'IMG-023': ['IMG-023_tournament-guide.png', 'トーナメント表・説明'],
   'IMG-801': ['IMG-801_sponsor-01.png', '協賛：ROH'],
   'IMG-802': ['IMG-802_sponsor-02.png', '協賛：匿名'],
   'IMG-803': ['IMG-803_sponsor-03.png', '協賛：KARINGA'],
