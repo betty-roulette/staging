@@ -3,12 +3,12 @@ import Page from '../../../../layouts/Page.astro';
 import Info from '../../../../components/Info.astro';
 import ImageCard from '../../../../components/ImageCard.astro';
 import ReferencedImage from '../../../../components/ReferencedImage.astro';
-import { href, type ImageId } from '../../../../lib/site';
+import { href, type ImageId, type PageId } from '../../../../lib/site';
 
 const page = 'PG-013';
-const disabledCards: { name: string; image: ImageId }[] = [
-  { name: '配信情報', image: 'IMG-017' },
-  { name: '試合結果・進行状況', image: 'IMG-019' },
+const cards: { name: string; image: ImageId; to: PageId }[] = [
+  { name: '配信情報', image: 'IMG-017', to: 'PG-016' },
+  { name: '試合結果・進行状況', image: 'IMG-019', to: 'PG-018' },
 ];
 ---
 <Page page={page}>
@@ -20,11 +20,11 @@ const disabledCards: { name: string; image: ImageId }[] = [
   </Info>
   <div class="image-links bracket-cards">
     <ImageCard page={page} to="PG-012" image="IMG-014" />
-    {disabledCards.map(({ name, image }) => (
-      <div class="image-card is-disabled">
+    {cards.map(({ name, image, to }) => (
+      <a class="image-card" href={href(page, to)}>
         <span class="image-stage"><ReferencedImage id={image} /></span>
-        <span class="image-label">{name}</span>
-      </div>
+        <span class="image-label"><span>{name}</span><span class="arrow" aria-hidden="true">→</span></span>
+      </a>
     ))}
   </div>
   <p class="parent-link"><a class="text-link" href={href(page, 'PG-010')}>参加者 に戻る</a></p>
@@ -36,7 +36,6 @@ const disabledCards: { name: string; image: ImageId }[] = [
   .tournament h2 { margin: 0; }
   hr { margin: 10px 0; border: 0; border-top: 1px solid #00A1BF; }
   .bracket-cards { margin-top: 32px; }
-  .is-disabled, .is-disabled .image-label { background: #EDF1F2; }
   :global(.pg013 .bracket-cards .image-stage) { display: flex; align-items: center; }
   :global(.pg013 .bracket-cards .image-stage img) {
     width: 100%;
