@@ -8,6 +8,14 @@ const page = 'PG-002';
 type NoticePart = string | { label: string; to: PageId };
 const notices: { date: string; text: string | NoticePart[] }[] = [
   {
+    date: '2026-11-19',
+    text: [{ label: '参加者紹介', to: 'PG-012' }, 'ページを公開しました。'],
+  },
+  {
+    date: '2026-11-18',
+    text: ['参加申込を終了しました。', { label: '大会ルール概要', to: 'PG-005' }, 'にトーナメント表を追加しました。'],
+  },
+  {
     date: '2026-11-14',
     text: [{ label: 'キラー：ルール', to: 'PG-008' }, 'に禁止パークを記載し、禁止アドオンを更新しました'],
   },
@@ -16,18 +24,6 @@ const notices: { date: string; text: string | NoticePart[] }[] = [
     text: [{ label: '協賛・賞金ページを追加しました', to: 'PG-024' }],
   },
   { date: '2026-11-09', text: 'Promotion Video(PV)を掲載しました。' },
-  {
-    date: '2026-11-08',
-    text: [
-      { label: 'お問合せ・よくある質問', to: 'PG-021' },
-      '、',
-      { label: '注意事項・免責事項', to: 'PG-019' },
-      '、',
-      { label: 'プライバシー・権利情報', to: 'PG-022' },
-      ' を更新しました',
-    ],
-  },
-  { date: '2026-11-05', text: 'べちぱーCup Vol.1の大会公式サイトを公開しました。大会概要・大会ルール・スケジュールなどの情報をご案内しています。' },
 ];
 const visibleNotices = [...notices].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
 const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
@@ -53,10 +49,6 @@ const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
   <Info class="notice">
     <table class="notice-table" aria-label="お知らせの日付と本文">
       <tbody>
-        <tr>
-          <td><strong>参加者募集中</strong></td>
-          <td>参加者募集を開始しました。<a class="text-link" href={href(page, 'PG-011')}>募集要項</a>より申込ください。個人での参加申込も可能になりました。</td>
-        </tr>
         {visibleNotices.map(({ date, text }) => (
           <tr>
             <td><time datetime={date}>{date.split('-').map(Number).join('/')}</time></td>
