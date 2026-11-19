@@ -2,26 +2,26 @@
 import Page from '../../../layouts/Page.astro';
 import Info from '../../../components/Info.astro';
 import ReferencedImage from '../../../components/ReferencedImage.astro';
-import { href, type ImageId } from '../../../lib/site';
+import { href, type ImageId, type PageId } from '../../../lib/site';
 
 const page = 'PG-010';
-const cards: { name: string; heading?: string; image: ImageId; enabled: boolean; description: [string, string] }[] = [
+const cards: { name: string; heading?: string; image: ImageId; to: PageId; enabled: boolean; description: [string, string] }[] = [
   {
-    name: '募集要項', image: 'IMG-010', enabled: true,
+    name: '募集要項', image: 'IMG-010', to: 'PG-011', enabled: true,
     description: [
       '大会への参加を希望される方に向けて、応募条件や参加方法などをご案内しています。',
       'チーム・個人それぞれの参加申込フォームもご用意しています。',
     ],
   },
   {
-    name: '参加者紹介', image: 'IMG-014', enabled: false,
+    name: '参加者紹介', image: 'IMG-014', to: 'PG-012', enabled: true,
     description: [
       '大会に参加するチームやメンバーをご紹介しています。',
       '各チームの意気込みや参加者の情報などをご覧いただけます。',
     ],
   },
   {
-    name: '対戦表', heading: '対戦・トーナメント表', image: 'IMG-015', enabled: false,
+    name: '対戦表', heading: '対戦・トーナメント表', image: 'IMG-015', to: 'PG-013', enabled: true,
     description: [
       '大会に参加するチーム同士の対戦組み合わせ（トーナメント表）をご案内しています。',
       '試合の対戦順や大会の進行状況などをご確認いただけます。',
@@ -31,11 +31,11 @@ const cards: { name: string; heading?: string; image: ImageId; enabled: boolean;
 ---
 <Page page={page}>
   <h1>参加者</h1>
-  {cards.map(({ name, heading = name, image, enabled, description }) => {
+  {cards.map(({ name, heading = name, image, to, enabled, description }) => {
     const Card = enabled ? 'a' : 'div';
     return (
       <Info title={heading}>
-        <Card class:list={['participant-card', { 'is-disabled': !enabled }]} href={enabled ? href(page, 'PG-011') : undefined}>
+        <Card class:list={['participant-card', { 'is-disabled': !enabled }]} href={enabled ? href(page, to) : undefined}>
           <span class="participant-image"><ReferencedImage id={image} class="full-image" /></span>
           <span class="participant-details">
             <span class="participant-label">
