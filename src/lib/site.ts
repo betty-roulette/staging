@@ -19,6 +19,8 @@ export const pages = {
   'PG-013': ['対戦表', '/betipercup/participants/bracket/'],
   'PG-014': ['大会当日', '/betipercup/event/'],
   'PG-015': ['大会当日スケジュール', '/betipercup/event/schedule/'],
+  'PG-016': ['配信情報', '/betipercup/event/streaming/'],
+  'PG-018': ['大会途中の試合結果・進行状況', '/betipercup/event/progress/'],
   'PG-019': ['注意事項・免責事項', '/betipercup/notice/'],
   'PG-020': ['運営者紹介', '/betipercup/organizer/'],
   'PG-021': ['お問い合わせ・よくある質問', '/betipercup/faq/'],
