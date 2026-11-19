@@ -2,13 +2,13 @@
 import Page from '../../../layouts/Page.astro';
 import Info from '../../../components/Info.astro';
 import ReferencedImage from '../../../components/ReferencedImage.astro';
-import type { ImageId } from '../../../lib/site';
+import { href, type ImageId, type PageId } from '../../../lib/site';
 
 const page = 'PG-009';
-const cards: { name: string; image: ImageId }[] = [
-  { name: 'タイムテーブル（当日）', image: 'IMG-016' },
-  { name: '参加者紹介', image: 'IMG-014' },
-  { name: '配信情報', image: 'IMG-017' },
+const cards: { name: string; image: ImageId; to: PageId }[] = [
+  { name: 'タイムテーブル（当日）', image: 'IMG-016', to: 'PG-015' },
+  { name: '参加者紹介', image: 'IMG-014', to: 'PG-012' },
+  { name: '配信情報', image: 'IMG-017', to: 'PG-016' },
 ];
 ---
 <Page page={page}>
@@ -17,11 +17,11 @@ const cards: { name: string; image: ImageId }[] = [
   <Info class="schedule-card-section">
     <div class="link-group">
       <div class="image-links">
-        {cards.map(({ name, image }) => (
-          <div class="image-card">
+        {cards.map(({ name, image, to }) => (
+          <a class="image-card" href={href(page, to)}>
             <span class="image-stage"><ReferencedImage id={image} /></span>
             <span class="image-label"><span>{name}</span></span>
-          </div>
+          </a>
         ))}
       </div>
     </div>
