@@ -1,4 +1,82 @@
 ---
-import ComingSoon from '../../../../components/ComingSoon.astro';
+import Page from '../../../../layouts/Page.astro';
+import Info from '../../../../components/Info.astro';
+import ReferencedImage from '../../../../components/ReferencedImage.astro';
+import { href, type ImageId, type PageId } from '../../../../lib/site';
+
+const page = 'PG-016';
+const streamingRows = ['配信名', '配信日時', '配信チャンネル＆URL', '配信スケジュール'];
+const commentatorRows = [
+  ['顔写真・イラスト', '準備中', '準備中', '準備中'],
+  ['名前', 'ゆーしい', '実況', 'べちぃ'],
+  ['プロフィール', 'プロフィール掲載枠', 'プロフィール掲載枠', 'プロフィール掲載枠'],
+  ['Xアカウント', '（掲載枠）', '（掲載枠）', '（掲載枠）'],
+  ['YouTube／Twitch等', '（掲載枠）', '（掲載枠）', '（掲載枠）'],
+  ['意気込み・コメント', '意気込み・コメント掲載枠', '意気込み・コメント掲載枠', '意気込み・コメント掲載枠'],
+] as const;
+const cards: { name: string; image: ImageId; to: PageId }[] = [
+  { name: '参加者紹介', image: 'IMG-014', to: 'PG-012' },
+  { name: '対戦・トーナメント表', image: 'IMG-015', to: 'PG-013' },
+  { name: '試合結果・進行状況', image: 'IMG-019', to: 'PG-018' },
+];
 ---
-<ComingSoon page="PG-016" />
+<Page page={page}>
+  <h1>配信情報</h1>
+  <Info>
+    <table class="rules-table streaming-table">
+      <colgroup><col /><col /></colgroup>
+      <tbody>
+        {streamingRows.map((label) => <tr><th scope="row">{label}</th><td>未定</td></tr>)}
+      </tbody>
+    </table>
+  </Info>
+  <h2 class="commentators-heading">解説者紹介</h2>
+  <Info>
+    <table class="rules-table commentators-table">
+      <thead><tr><th scope="col">項目</th><th scope="col">解説者</th><th scope="col">解説者</th><th scope="col">主催者</th></tr></thead>
+      <tbody>
+        {commentatorRows.map(([label, ...values]) => (
+          <tr><th scope="row">{label}</th>{values.map((value) => <td>{value}</td>)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </Info>
+  <div class="image-links streaming-cards">
+    {cards.map(({ name, image, to }) => (
+      <a class="image-card" href={href(page, to)}>
+        <span class="image-stage"><ReferencedImage id={image} /></span>
+        <span class="image-label"><span>{name}</span><span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    ))}
+  </div>
+  <p class="parent-link"><a class="text-link" href={href(page, 'PG-014')}>大会当日 へ戻る</a></p>
+</Page>
+
+<style>
+  h1 { margin-bottom: 20px; }
+  :global(.pg016 .info) { box-sizing: border-box; width: 100%; border-radius: 10px; }
+  /* Approved provisional widths; retain until a later instructed revision. */
+  .streaming-table col:first-child { width: 25%; }
+  .streaming-table col:last-child { width: 75%; }
+  .streaming-table tbody tr:nth-child(odd) > :is(th, td) { background: #FFFFFF; }
+  .streaming-table tbody tr:nth-child(even) > :is(th, td) { background: #F1F9FB; }
+  .commentators-heading { margin: 36px 0 16px; }
+  .commentators-table tr { height: auto; }
+  .commentators-table tbody td { font-weight: 400; background: #FFFFFF; }
+  .commentators-table tbody tr:nth-child(even) td { background: #F1F9FB; }
+  .streaming-cards { margin-top: 32px; }
+  .image-card { background: #FFFFFF; }
+  .image-stage { display: flex; align-items: center; }
+  :global(.pg016 .streaming-cards .image-stage img) {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  @media (max-width: 960px) {
+    h1 { margin-bottom: 18px; }
+    .streaming-table col:first-child { width: 40%; }
+    .streaming-table col:last-child { width: 60%; }
+    .commentators-heading { margin-bottom: 12px; }
+    .streaming-cards { margin-top: 16px; }
+  }
+</style>
