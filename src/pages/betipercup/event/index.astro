@@ -1,4 +1,95 @@
 ---
-import ComingSoon from '../../../components/ComingSoon.astro';
+import Page from '../../../layouts/Page.astro';
+import Info from '../../../components/Info.astro';
+import ReferencedImage from '../../../components/ReferencedImage.astro';
+import { href, type ImageId, type PageId } from '../../../lib/site';
+
+const page = 'PG-014';
+const cards: { heading: string; image: ImageId; to: PageId; description: string[] }[] = [
+  {
+    heading: 'タイムテーブル（当日）', image: 'IMG-016', to: 'PG-015',
+    description: [
+      '大会当日のスケジュールをご案内しています。',
+      '各試合の開始予定時刻や進行予定をご確認いただけます。',
+      'なお、当日の進行状況によって時間が変更となる場合があります。',
+    ],
+  },
+  {
+    heading: '配信情報', image: 'IMG-017', to: 'PG-016',
+    description: [
+      '大会当日のライブ配信に関する情報をご案内しています。',
+      '配信日時や配信チャンネル、視聴先のURLなどをご確認いただけます。',
+    ],
+  },
+  {
+    heading: '試合結果・進行状況', image: 'IMG-019', to: 'PG-018',
+    description: [
+      '大会当日の試合結果や進行状況をお知らせします。',
+      '各試合の結果やトーナメントの進行状況などを随時ご確認いただけます。',
+    ],
+  },
+];
 ---
-<ComingSoon page="PG-014" />
+<Page page={page}>
+  <h1>大会当日</h1>
+  {cards.map(({ heading, image, to, description }) => (
+    <Info title={heading}>
+      <a class="event-card" href={href(page, to)}>
+        <span class="event-image"><ReferencedImage id={image} class="full-image" /></span>
+        <span class="event-details">
+          <span class="event-label">
+            <span>{description.map((line, index) => <>{index > 0 && <br />}{line}</>)}</span>
+            <span class="arrow event-arrow" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </a>
+    </Info>
+  ))}
+</Page>
+
+<style>
+  h1 { margin-bottom: 20px; }
+  :global(.pg014 .info) { border-radius: 10px; }
+  :global(.pg014 .info > h2) { margin-bottom: 16px; }
+  .event-card {
+    display: grid;
+    grid-template-columns: minmax(0, 33fr) minmax(0, 67fr);
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+    padding: 16px;
+    border: 3px solid #00A1BF;
+    border-radius: 10px;
+    background: #EBF8FB;
+    color: inherit;
+    text-decoration: none;
+  }
+  .event-image {
+    background: #EBF8FB;
+    border: 1px solid #00A1BF;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .event-details {
+    align-self: stretch;
+    display: grid;
+    align-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: #FFFFFF;
+  }
+  .event-label { display: flex; align-items: center; justify-content: space-between; }
+  .event-label > :first-child { min-width: 0; overflow-wrap: anywhere; }
+  .event-arrow { background: #FFFFFF; }
+  @media (max-width: 960px) {
+    h1 { margin-bottom: 18px; }
+    :global(.pg014 .info > h2) { margin-bottom: 12px; }
+    .event-card {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px;
+      border-width: 2px;
+    }
+    .event-arrow { background: none; }
+  }
+</style>
