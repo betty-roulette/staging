@@ -1,4 +1,72 @@
 ---
-import ComingSoon from '../../../../components/ComingSoon.astro';
+import Page from '../../../../layouts/Page.astro';
+import ReferencedImage from '../../../../components/ReferencedImage.astro';
+import { href, type ImageId, type PageId } from '../../../../lib/site';
+
+const page = 'PG-015';
+const cards: { name: string; image: ImageId; to: PageId }[] = [
+  { name: '対戦・トーナメント表', image: 'IMG-015', to: 'PG-013' },
+  { name: '配信情報', image: 'IMG-017', to: 'PG-016' },
+  { name: '試合結果・進行状況', image: 'IMG-019', to: 'PG-018' },
+];
 ---
-<ComingSoon page="PG-015" />
+<Page page={page}>
+  <h1>タイムテーブル</h1>
+  <div class="slides-outer">
+    <div class="slides-inner">
+      <iframe
+        src="https://docs.google.com/presentation/d/e/2PACX-1vTC7z_3IsLjP4D7ZotRwUeRZjE4a98Ujs6IHEZwowVEjwdQt8GkGeFk48yiPv3CtXYNee4tNUhbAzCp/pubembed?start=true&amp;loop=false&amp;delayms=60000"
+        frameborder="0"
+        width="960"
+        height="569"
+        allowfullscreen="true"
+        mozallowfullscreen="true"
+        webkitallowfullscreen="true"
+        title="大会当日スケジュール"
+      ></iframe>
+    </div>
+  </div>
+  <div class="image-links schedule-cards">
+    {cards.map(({ name, image, to }) => (
+      <a class="image-card" href={href(page, to)}>
+        <span class="image-stage"><ReferencedImage id={image} /></span>
+        <span class="image-label"><span>{name}</span><span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    ))}
+  </div>
+  <p class="parent-link"><a class="text-link" href={href(page, 'PG-014')}>大会当日 へ戻る</a></p>
+</Page>
+
+<style>
+  h1 { margin-bottom: 20px; }
+  .slides-outer, .slides-inner {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #00A1BF;
+    border-radius: 10px;
+  }
+  .slides-outer { padding: 16px; background: #EBF8FB; }
+  .slides-inner { padding: 0; background: #FFFFFF; }
+  iframe {
+    display: block;
+    width: 100%;
+    max-width: 960px;
+    aspect-ratio: 960 / 569;
+    height: auto;
+    margin-inline: auto;
+    border: 0;
+  }
+  .schedule-cards { margin-top: 32px; }
+  .image-card { background: #FFFFFF; }
+  .image-stage { display: flex; align-items: center; }
+  :global(.pg015 .schedule-cards .image-stage img) {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  @media (max-width: 960px) {
+    h1 { margin-bottom: 18px; }
+    .slides-outer { padding: 12px; }
+    .schedule-cards { margin-top: 16px; }
+  }
+</style>
