@@ -91,13 +91,14 @@ const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
   .pg002 .guides > h2,
   .pg002 .other-guides > h2 { margin-block: 36px 8px; }
 
-  /* The notice's top border and padding each contribute 4px to the gap. */
+  /* Match the notice's vertical padding without changing its heading. */
   .pg002 .notice-heading { margin-bottom: 0; }
-  .pg002 .notice { padding-top: 4px; }
+  .pg002 .notice { padding-top: 16px; }
 
   /* Include the card border in the gap to the image element. */
   .pg002 .guides > h2 { margin-bottom: 4px; }
   @media (max-width: 960px) {
+    .pg002 .notice { padding-top: 14px; }
     .pg002 .guides > h2 { margin-bottom: 7px; }
   }
 
