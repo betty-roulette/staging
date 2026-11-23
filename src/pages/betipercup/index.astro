@@ -8,6 +8,10 @@ const page = 'PG-002';
 type NoticePart = string | { label: string; to: PageId };
 const notices: { date: string; text: string | NoticePart[] }[] = [
   {
+    date: '2026-11-23',
+    text: [{ label: 'トーナメント表', to: 'PG-013' }, 'を公開しました。9チーム参加のため開始時間が17:00に変更されてますのでご注意ください。'],
+  },
+  {
     date: '2026-11-19',
     text: [{ label: '参加者紹介', to: 'PG-012' }, 'ページを公開しました。'],
   },
@@ -21,9 +25,8 @@ const notices: { date: string; text: string | NoticePart[] }[] = [
   },
   {
     date: '2026-11-11',
-    text: [{ label: '協賛・賞金ページを追加しました', to: 'PG-024' }],
+    text: [{ label: '協賛・賞金', to: 'PG-024' }, 'ページを追加しました。'],
   },
-  { date: '2026-11-09', text: 'Promotion Video(PV)を掲載しました。' },
 ];
 const visibleNotices = [...notices].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
 const other: PageId[] = ['PG-021', 'PG-019', 'PG-022'];
